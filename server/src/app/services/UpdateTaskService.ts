@@ -7,6 +7,7 @@ interface IRequestDTO {
   user_id: string;
   task_id: string;
   description: string;
+  status: 'pending' | 'completed';
 }
 
 export default class UpdateTaskService {
@@ -14,6 +15,7 @@ export default class UpdateTaskService {
     user_id,
     task_id,
     description,
+    status,
   }: IRequestDTO): Promise<TaskType> {
     const user = await User.findById(user_id);
 
@@ -28,7 +30,8 @@ export default class UpdateTaskService {
     }
 
     await task.update({
-      description,
+      description: description || task.description,
+      status: status || task.status,
     });
 
     return task;

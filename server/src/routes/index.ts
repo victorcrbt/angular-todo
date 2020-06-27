@@ -15,6 +15,8 @@ routes.use(ensureAuthentication);
 
 routes.post('/tasks', TasksController.store);
 routes.get('/tasks', TasksController.index);
+routes.get('/tasks/:task_id', TasksController.show);
 routes.put('/tasks/:task_id', TasksController.update);
+routes.delete('/tasks/:task_id', TasksController.destroy);
 
 export default routes;
