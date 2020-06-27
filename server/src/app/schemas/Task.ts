@@ -3,7 +3,6 @@ import { Schema, model, Document } from 'mongoose';
 import { UserType } from './User';
 
 export interface TaskType extends Document {
-  id?: string;
   user?: UserType | string;
   description: string;
   status: 'pending' | 'completed';

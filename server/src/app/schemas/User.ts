@@ -3,7 +3,6 @@ import { Schema, model, Document } from 'mongoose';
 import { TaskType } from './Task';
 
 export interface UserType extends Document {
-  id?: string;
   name: string;
   email: string;
   password: string;
