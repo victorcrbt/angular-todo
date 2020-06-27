@@ -1,7 +1,6 @@
-import { getMongoRepository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 
-import User from '../models/User';
+import User, { UserType } from '../schemas/User';
 import AppError from '../../error/AppError';
 
 interface IRequestDTO {
@@ -11,13 +10,13 @@ interface IRequestDTO {
 }
 
 export default class CreateUserService {
-  public async execute({ name, email, password }: IRequestDTO): Promise<User> {
-    const usersRepository = getMongoRepository(User);
-
-    const emailAlreadyUsed = await usersRepository.findOne({
-      where: {
-        email,
-      },
+  public async execute({
+    name,
+    email,
+    password,
+  }: IRequestDTO): Promise<UserType> {
+    const emailAlreadyUsed = await User.findOne({
+      email,
     });
 
     if (emailAlreadyUsed) {
@@ -26,13 +25,11 @@ export default class CreateUserService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = usersRepository.create({
+    const user = await User.create({
       name,
       email,
       password: hashedPassword,
     });
-
-    await usersRepository.save(user);
 
     return user;
   }

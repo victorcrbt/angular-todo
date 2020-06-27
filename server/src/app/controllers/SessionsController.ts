@@ -13,7 +13,7 @@ class SessionsController {
       password,
     });
 
-    delete session.user.password;
+    session.user.password = (undefined as unknown) as string;
 
     return res.status(201).json(session);
   }

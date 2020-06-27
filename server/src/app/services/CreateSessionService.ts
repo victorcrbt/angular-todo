@@ -1,10 +1,9 @@
-import { getMongoRepository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import authConfig from '../../config/auth';
 
-import User from '../models/User';
+import User, { UserType } from '../schemas/User';
 
 import AppError from '../../error/AppError';
 
@@ -15,7 +14,7 @@ interface IRequestDTO {
 
 interface IResponseDTO {
   token: string;
-  user: User;
+  user: UserType;
 }
 
 export default class CreateSessionService {
@@ -23,10 +22,8 @@ export default class CreateSessionService {
     email,
     password,
   }: IRequestDTO): Promise<IResponseDTO> {
-    const usersRepository = getMongoRepository(User);
-
-    const user = await usersRepository.findOne({
-      where: { email },
+    const user = await User.findOne({
+      email,
     });
 
     if (!user) {
