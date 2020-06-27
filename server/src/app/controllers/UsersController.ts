@@ -14,6 +14,8 @@ class UsersController {
       password,
     });
 
+    delete user.password;
+
     return res.status(201).json(user);
   }
 }
