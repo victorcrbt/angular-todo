@@ -1,3 +1,6 @@
-import { createConnection } from 'typeorm';
+import mongoose from 'mongoose';
 
-createConnection();
+mongoose.connect('mongodb://localhost:27017/angular-todo', {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
